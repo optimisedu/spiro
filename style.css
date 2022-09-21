@@ -1,0 +1,16 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.center {
+	border: 3px double #333;
+	border-radius: 5px;
+}
