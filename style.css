@@ -14,3 +14,7 @@
 	border: 3px double #333;
 	border-radius: 5px;
 }
+
+.center .container {
+	aspect-ratio: 16/9;
+}
