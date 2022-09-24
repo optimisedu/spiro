@@ -10,18 +10,29 @@ let centerY = height / 2;
 let radius = 200;
 let angle = 0;
 let speed = 0.01;
-let offset = 50;
+let offset = 90;
 
 let x, y, dx, dy;
 
-const alpha = '0.05';
-const alphaCog = '0.03';
-function r() {
-	return Math.floor(Math.random() * 255);
+let alph = Math.random();
+let alpha = alph > 0.05 ? (alph = (0.05).toString()) : (alph = alph.toString());
+
+const randomInt = (val) => {
+	return Math.floor(Math.random() * val) - 1;
+};
+
+function generateRandomColor() {
+	hue = randomInt(540);
+	sat = randomInt(100) + '%';
+	lgt = randomInt(100) + '%';
+	let a = 0.05;
+	return 'hsl(' + hue + 'deg, ' + sat + ', ' + lgt + ', ' + alpha + ')';
 }
 
-let ballColor = 'rgba(' + r() + ',' + r() + ',' + r() + ',' + alpha + ')';
-let cogColor = 'rgba(' + r() + ',' + r() + ',' + r() + ',' + alphaCog + ')';
+let ballColor = generateRandomColor();
+
+console.log(alpha, ballColor);
+let cogColor = generateRandomColor();
 
 console.log(ballColor, cogColor);
 
@@ -29,7 +40,7 @@ ctx.translate(centerX, centerY);
 ctx.lineWidth = 3;
 
 class Ball {
-	constructor(x, y, radius, color) {
+	constructor(x, centery, radius, color) {
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
@@ -69,18 +80,18 @@ const render = () => {
 		angle += speed % 4;
 		for (let i = 0; i < CIRCLES.length; i++) {
 			if (i % 4 == 0) {
-				let r = radius / CIRCLES[index];
+				let r = radius / CIRCLES[i];
 				angle += speed;
-				x = Math.cos(angle) * (radius + offset * i);
+				x = Math.cos(angle) * (r + offset * i);
 				x = r * Math.cos(angle * CIRCLES[i]);
 				y = r * Math.sin(angle * CIRCLES[i]);
 				new Ball(x, y, 50, ballColor).draw();
-				ctx.arc(x, y, 25, 0, Math.PI * 2);
+				ctx.arc(x, y, 24, 0, Math.PI * 2);
 				ctx.lineTo(x, y);
 			} else {
 				let r = radius / CIRCLES[index];
 				angle += speed;
-				x = Math.cos(angle) * (radius - offset * index);
+				x = Math.cos(angle) * (r - offset * index);
 				x = r * Math.sin(angle * CIRCLES[index]);
 				// y = r * Math.cos(angle * CIRCLES[i]);
 				ctx.arc(dx, dy, 60, 0, Math.PI * 2);
